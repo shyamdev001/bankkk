@@ -70,7 +70,7 @@ export async function scanTemplateForLabels(
     // Check each field definition
     for (const def of FIELD_DEFINITIONS) {
       // Check if any keyword matches
-      const isMatch = def.ocrKeywords.some((kw) => lowerText.includes(kw));
+      const isMatch = (def.ocrKeywords || []).some((kw: string) => lowerText.includes(kw));
 
       if (isMatch) {
         const detection: OcrDetectionResult = {

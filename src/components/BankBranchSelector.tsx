@@ -57,15 +57,17 @@ export const BankBranchSelector: React.FC<BankBranchSelectorProps> = ({
 
   // Handle branch application to the form
   const handleApply = (branch: BankBranch) => {
+    const codePadded = (branch.branchCode || '').padEnd(6, ' ');
     const branchName = isGu
-      ? `${branch.officeGu} શાખા, ${branch.districtGu}`
-      : `${branch.officeEn} Branch, ${branch.districtEn}`;
+      ? `${branch.officeGu} (${codePadded})`
+      : `${branch.officeEn.toUpperCase()} (${codePadded})`;
 
     const updates: Partial<Record<DocumentFieldKey, string>> = {
       branchName,
-      ifscCode: branch.ifsc,
       branchCode: branch.branchCode,
+      ifscCode: branch.ifsc,
       micrCode: branch.micrCode,
+      branchAddress: branch.address,
     };
 
     if (copyBranchAddress && branch.address) {

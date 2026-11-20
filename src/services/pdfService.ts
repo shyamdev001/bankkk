@@ -206,9 +206,7 @@ export async function renderDocumentToCanvas(
     if (!config || !config.visible) continue;
 
     const rawValue = values[key] ?? '';
-    const displayText = config.showPrefix && config.prefixText
-      ? `${config.prefixText} ${rawValue}`
-      : rawValue;
+    const displayText = rawValue;
 
     if (!displayText.trim()) continue;
 

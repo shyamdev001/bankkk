@@ -10,7 +10,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           'pdf-engine': ['pdfjs-dist', 'pdf-lib'],
-          'ocr-engine': ['tesseract.js']
         }
       }
     }
