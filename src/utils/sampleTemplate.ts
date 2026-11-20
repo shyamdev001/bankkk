@@ -9,9 +9,9 @@ import { KDCC_BLANK_TEMPLATE_DATA_URL } from './kdccBlankBase64';
 export function generateDefaultBankTemplate(): TemplateData {
   return {
     id: 'primary_template',
-    name: 'KDCC Bank Passbook & Account Statement Slip (Official Template)',
+    name: 'KDCC Bank Passbook & Account Statement Slip (Official HD Template)',
     type: 'image',
-    originalFileName: 'kdcc_passbook_template.jpg',
+    originalFileName: 'kdcc_passbook_template.png',
     dataUrl: KDCC_BLANK_TEMPLATE_DATA_URL,
     width: 1024,
     height: 576,
