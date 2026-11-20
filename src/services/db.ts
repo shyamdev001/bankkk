@@ -1,5 +1,5 @@
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
-import { DocumentFieldKey, FieldConfig, SavedRecord, TemplateData, DEFAULT_FIELD_CONFIGS } from '../types';
+import { DocumentFieldKey, FieldConfig, SavedRecord, TemplateData, DEFAULT_FIELD_CONFIGS, FIELD_CONFIG_VERSION } from '../types';
 
 interface SmartDocDBSchema extends DBSchema {
   templates: {
@@ -77,16 +77,27 @@ export async function deletePrimaryTemplate(): Promise<void> {
 // === Field Configurations Storage ===
 export async function saveFieldConfigs(configs: Record<DocumentFieldKey, FieldConfig>): Promise<void> {
   const db = await getDB();
-  await db.put('field_configs', configs, FIELDS_KEY);
+  await db.put('field_configs', { ...configs, _version: FIELD_CONFIG_VERSION } as any, FIELDS_KEY);
 }
 
 export async function getFieldConfigs(): Promise<Record<DocumentFieldKey, FieldConfig>> {
   const db = await getDB();
-  const configs = await db.get('field_configs', FIELDS_KEY);
-  if (!configs) {
-    return { ...DEFAULT_FIELD_CONFIGS };
+  const configs = (await db.get('field_configs', FIELDS_KEY)) as any;
+  
+  // Verify configuration matches current pixel-accurate version
+  const isUpToDate =
+    configs &&
+    configs._version === FIELD_CONFIG_VERSION &&
+    configs.branchName &&
+    configs.branchName.x === 255 &&
+    configs.branchName.y === 175;
+
+  if (!isUpToDate) {
+    const updated = { ...DEFAULT_FIELD_CONFIGS, _version: FIELD_CONFIG_VERSION } as any;
+    await db.put('field_configs', updated, FIELDS_KEY);
+    return DEFAULT_FIELD_CONFIGS;
   }
-  // Ensure any newly added fields get merged with defaults
+
   return {
     ...DEFAULT_FIELD_CONFIGS,
     ...configs,

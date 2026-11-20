@@ -12,6 +12,7 @@ import {
   DocumentFieldKey,
   FieldConfig,
   TemplateData,
+  KDCC_STANDARD_LABELS,
 } from '../types';
 
 interface DocumentCanvasProps {
@@ -26,7 +27,8 @@ interface DocumentCanvasProps {
 
 // Authentic bank passbook typography - exact match to pre-printed slip labels
 const UNIFORM_CANVAS_FONT = 'Arial, "Segoe UI", Inter, Helvetica, sans-serif';
-const UNIFORM_CANVAS_SIZE = 13;
+const UNIFORM_CANVAS_SIZE = 12;
+const UNIFORM_CANVAS_COLOR = '#282d37';
 
 export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
   template,
@@ -102,8 +104,25 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
             )}
           </Layer>
 
-          {/* Layer 2: Editable Values - All Identical Monospace Font and Size */}
+          {/* Layer 2: Unified Typography - Both Field Labels & Field Values rendered with identical font and styling */}
           <Layer>
+            {/* Standard Pre-printed Labels rendered on canvas (ensures 100% font and effect consistency) */}
+            {KDCC_STANDARD_LABELS.map((item) => (
+              <KonvaText
+                key={item.id}
+                x={item.x}
+                y={item.y}
+                text={item.text}
+                fontSize={UNIFORM_CANVAS_SIZE}
+                fontFamily={UNIFORM_CANVAS_FONT}
+                fontStyle="bold"
+                fill={UNIFORM_CANVAS_COLOR}
+                padding={0}
+                listening={false}
+              />
+            ))}
+
+            {/* Editable Field Values */}
             {Object.keys(fields).map((k) => {
               const key = k as DocumentFieldKey;
               const config = fields[key];
@@ -145,7 +164,7 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
                     fontSize={config.fontSize || UNIFORM_CANVAS_SIZE}
                     fontFamily={config.fontFamily || UNIFORM_CANVAS_FONT}
                     fontStyle={config.bold ? 'bold' : 'normal'}
-                    fill={config.color || '#111827'}
+                    fill={config.color || UNIFORM_CANVAS_COLOR}
                     align={config.align || 'left'}
                     lineHeight={config.lineHeight || 1.35}
                     wrap="word"

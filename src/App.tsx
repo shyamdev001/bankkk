@@ -110,13 +110,14 @@ export const App: React.FC = () => {
         let storedTemplate = await getPrimaryTemplate();
         const storedFields = await getFieldConfigs();
 
-        // Check if stored template or coordinates are from the previous outdated version (e.g. branchName.x < 260 or Courier font)
+        // Check if stored template or coordinates are from the previous outdated version
         const isOutdated =
           !storedTemplate ||
           storedTemplate.width !== 1024 ||
           !storedFields ||
           !storedFields.branchName ||
-          storedFields.branchName.x < 260 ||
+          storedFields.branchName.x !== 255 ||
+          storedFields.branchName.y !== 175 ||
           storedFields.branchName.fontFamily?.includes('Courier') ||
           !storedFields.branchName.fontFamily?.includes('Arial');
 

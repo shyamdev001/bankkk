@@ -250,20 +250,74 @@ export const AVAILABLE_FONTS = [
 ];
 
 export const UNIFORM_FONT = 'Arial, "Segoe UI", Inter, Helvetica, sans-serif';
-export const UNIFORM_COLOR = '#111827';
-export const UNIFORM_SIZE = 13;
+export const UNIFORM_COLOR = '#111827'; // Dark authentic passbook print color
+export const UNIFORM_SIZE = 12; // Calibrated 12px matching exact passbook typography
+export const FIELD_CONFIG_VERSION = 'v2026_11_20_unified_canvas_labels';
+
+export interface TemplateLabelItem {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+  width?: number;
+}
+
+/**
+ * Standard pre-printed field labels rendered directly on the canvas alongside user values.
+ * This ensures BOTH the field names ('Branch Name & Code :', 'Customer No :', etc.) and the user answers
+ * share the 100% identical font family, weight, color, crispness, and rendering engine.
+ */
+export const KDCC_STANDARD_LABELS: TemplateLabelItem[] = [
+  // Left column labels
+  { id: 'lbl_branch', text: 'Branch Name & Code', x: 35, y: 175 },
+  { id: 'colon_branch', text: ':', x: 240, y: 175 },
+  { id: 'lbl_addr', text: 'Branch Address', x: 35, y: 194 },
+  { id: 'colon_addr', text: ':', x: 240, y: 194 },
+  { id: 'lbl_phone', text: 'Brphone', x: 35, y: 215 },
+  { id: 'colon_phone', text: ':', x: 240, y: 215 },
+  { id: 'lbl_prod', text: 'Product Description', x: 35, y: 234 },
+  { id: 'colon_prod', text: ':', x: 240, y: 234 },
+  { id: 'lbl_date', text: 'Date of Issue', x: 35, y: 253 },
+  { id: 'colon_date', text: ':', x: 240, y: 253 },
+  { id: 'lbl_cust', text: 'Customer No', x: 35, y: 274 },
+  { id: 'colon_cust', text: ':', x: 240, y: 274 },
+  { id: 'lbl_acc', text: 'Account No', x: 35, y: 293 },
+  { id: 'colon_acc', text: ':', x: 240, y: 293 },
+  { id: 'lbl_name', text: 'Name', x: 35, y: 313 },
+  { id: 'colon_name', text: ':', x: 240, y: 313 },
+  { id: 'lbl_nomreg', text: 'Nominee Reg. No.', x: 35, y: 333 },
+  { id: 'colon_nomreg', text: ':', x: 240, y: 333 },
+  { id: 'lbl_joint', text: 'JointHolder Name', x: 35, y: 352 },
+  { id: 'colon_joint', text: ':', x: 240, y: 352 },
+  { id: 'lbl_caddr', text: 'Address', x: 35, y: 396 },
+  { id: 'colon_caddr', text: ':', x: 240, y: 396 },
+  { id: 'lbl_nom', text: 'Nominee', x: 35, y: 438 },
+  { id: 'colon_nom', text: ':', x: 240, y: 438 },
+  { id: 'lbl_mode', text: 'Mode of Operation', x: 35, y: 457 },
+  { id: 'colon_mode', text: ':', x: 240, y: 457 },
+
+  // Right column labels
+  { id: 'lbl_ifsc', text: 'IFSC CODE', x: 500, y: 175 },
+  { id: 'colon_ifsc', text: ':', x: 595, y: 175 },
+  { id: 'lbl_micr', text: 'MICR CODE', x: 710, y: 234 },
+  { id: 'colon_micr', text: ':', x: 810, y: 234 },
+  { id: 'lbl_ckyc', text: 'CKYC No', x: 710, y: 253 },
+  { id: 'colon_ckyc', text: ':', x: 810, y: 253 },
+  { id: 'lbl_nomname', text: 'Nominee Name', x: 430, y: 438 },
+  { id: 'colon_nomname', text: ':', x: 565, y: 438 },
+];
 
 /**
  * Pixel-accurate coordinates matching the authentic KDCC Bank passbook slip (1024 x 576 px).
  * All fields have the EXACT SAME uniform font family (Arial Bold / Segoe UI Bold Sans-Serif),
- * matching the pre-printed labels ('Branch Name & Code :', 'Customer No :', etc.) on the authentic slip.
+ * authentic charcoal ribbon ink (#282d37), and precise vertical alignment matching the pre-printed labels.
  */
 export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   branchName: {
     key: 'branchName',
-    x: 265,
-    y: 172,
-    width: 320,
+    x: 255,
+    y: 175,
+    width: 230,
     height: 18,
     fontSize: UNIFORM_SIZE,
     fontFamily: UNIFORM_FONT,
@@ -276,7 +330,7 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   branchCode: {
     key: 'branchCode',
     x: 350,
-    y: 172,
+    y: 175,
     width: 80,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -285,12 +339,12 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
     align: 'left',
     bold: true,
     italic: false,
-    visible: false, // Combined inside branchName "ANAND (002    )"
+    visible: false, // Combined inside branchName "PIPLAV (065  )"
   },
   ifscCode: {
     key: 'ifscCode',
-    x: 618,
-    y: 172,
+    x: 610,
+    y: 175,
     width: 170,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -303,8 +357,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   branchAddress: {
     key: 'branchAddress',
-    x: 265,
-    y: 192,
+    x: 255,
+    y: 194,
     width: 500,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -317,8 +371,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   productDescription: {
     key: 'productDescription',
-    x: 265,
-    y: 231,
+    x: 255,
+    y: 234,
     width: 250,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -331,8 +385,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   micrCode: {
     key: 'micrCode',
-    x: 830,
-    y: 231,
+    x: 825,
+    y: 234,
     width: 150,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -345,8 +399,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   dateOfIssue: {
     key: 'dateOfIssue',
-    x: 265,
-    y: 250,
+    x: 255,
+    y: 253,
     width: 200,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -359,8 +413,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   ckycNo: {
     key: 'ckycNo',
-    x: 830,
-    y: 250,
+    x: 825,
+    y: 253,
     width: 150,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -373,8 +427,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   customerId: {
     key: 'customerId',
-    x: 265,
-    y: 270,
+    x: 255,
+    y: 274,
     width: 300,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -387,8 +441,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   accountNumber: {
     key: 'accountNumber',
-    x: 265,
-    y: 289,
+    x: 255,
+    y: 293,
     width: 300,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -401,8 +455,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   customerName: {
     key: 'customerName',
-    x: 265,
-    y: 308,
+    x: 255,
+    y: 313,
     width: 450,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -415,8 +469,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   accountHolderName: {
     key: 'accountHolderName',
-    x: 265,
-    y: 348,
+    x: 255,
+    y: 352,
     width: 450,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -429,8 +483,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   address: {
     key: 'address',
-    x: 265,
-    y: 395,
+    x: 255,
+    y: 396,
     width: 450,
     height: 38,
     fontSize: UNIFORM_SIZE,
@@ -440,12 +494,12 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
     bold: true,
     italic: false,
     visible: true,
-    lineHeight: 1.35,
+    lineHeight: 1.45,
   },
   nominee: {
     key: 'nominee',
-    x: 265,
-    y: 434,
+    x: 255,
+    y: 438,
     width: 40,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -458,8 +512,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   nomineeName: {
     key: 'nomineeName',
-    x: 584,
-    y: 434,
+    x: 580,
+    y: 438,
     width: 320,
     height: 18,
     fontSize: UNIFORM_SIZE,
@@ -472,8 +526,8 @@ export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   },
   modeOfOperation: {
     key: 'modeOfOperation',
-    x: 265,
-    y: 454,
+    x: 255,
+    y: 457,
     width: 200,
     height: 18,
     fontSize: UNIFORM_SIZE,

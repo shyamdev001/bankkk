@@ -1,7 +1,7 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import { PDFDocument } from 'pdf-lib';
-import { CustomerData, DocumentFieldKey, FieldConfig, TemplateData } from '../types';
+import { CustomerData, DocumentFieldKey, FieldConfig, TemplateData, KDCC_STANDARD_LABELS } from '../types';
 
 // Configure PDF.js worker using Vite asset URL
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
@@ -202,7 +202,19 @@ export async function renderDocumentToCanvas(
     img.src = template.dataUrl;
   });
 
-  // 2. Draw Editable Fields
+  // 2. Draw Pre-printed Field Labels (exact match with values)
+  const labelFontSize = Math.round(12 * exportScale);
+  const commonFontFamily = 'Arial, "Segoe UI", Inter, Helvetica, sans-serif';
+  ctx.font = `bold ${labelFontSize}px ${commonFontFamily}`;
+  ctx.fillStyle = '#111827';
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'left';
+
+  for (const item of KDCC_STANDARD_LABELS) {
+    ctx.fillText(item.text, item.x * exportScale, item.y * exportScale);
+  }
+
+  // 3. Draw Editable Fields
   for (const key of Object.keys(fields) as DocumentFieldKey[]) {
     const config = fields[key];
     if (!config || !config.visible) continue;
@@ -215,13 +227,13 @@ export async function renderDocumentToCanvas(
     const scaledX = config.x * exportScale;
     const scaledY = config.y * exportScale;
     const scaledWidth = config.width * exportScale;
-    const baseFontSize = config.fontSize || 13;
+    const baseFontSize = config.fontSize || 12;
     const scaledFontSize = Math.round(baseFontSize * exportScale);
 
     // Exact match with pre-printed bank slip sans-serif bold typography
     const fontFamily = config.fontFamily || 'Arial, "Segoe UI", Inter, Helvetica, sans-serif';
     ctx.font = `${config.bold ? 'bold ' : ''}${scaledFontSize}px ${fontFamily}`;
-    ctx.fillStyle = config.color || '#111827';
+    ctx.fillStyle = config.color || '#282d37';
     ctx.textBaseline = 'top';
 
     // Alignment and X anchor calculation
