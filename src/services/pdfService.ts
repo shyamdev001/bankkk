@@ -213,11 +213,13 @@ export async function renderDocumentToCanvas(
     const scaledX = config.x * exportScale;
     const scaledY = config.y * exportScale;
     const scaledWidth = config.width * exportScale;
-    const scaledFontSize = Math.round(14 * exportScale);
+    const baseFontSize = config.fontSize || 13;
+    const scaledFontSize = Math.round(baseFontSize * exportScale);
 
-    // Uniform crisp monospace bank passbook typography
-    ctx.font = `bold ${scaledFontSize}px "Courier New", "Courier Prime", Courier, monospace`;
-    ctx.fillStyle = '#111827';
+    // Exact match with pre-printed bank slip sans-serif bold typography
+    const fontFamily = config.fontFamily || 'Arial, "Segoe UI", Inter, Helvetica, sans-serif';
+    ctx.font = `${config.bold ? 'bold ' : ''}${scaledFontSize}px ${fontFamily}`;
+    ctx.fillStyle = config.color || '#111827';
     ctx.textBaseline = 'top';
 
     // Alignment and X anchor calculation

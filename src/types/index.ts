@@ -244,18 +244,19 @@ export const FIELD_DEFINITIONS: FieldDefinition[] = [
 ];
 
 export const AVAILABLE_FONTS = [
-  { name: 'Bank Passbook Monospace (Default)', value: '"Courier Prime", "Courier New", Consolas, monospace', category: 'English' },
-  { name: 'Inter (Clean Modern)', value: 'Inter, sans-serif', category: 'English' },
-  { name: 'Noto Sans Gujarati (Clean Official)', value: '"Noto Sans Gujarati", sans-serif', category: 'Gujarati' },
+  { name: 'Bank Official Sans (Exact Template Match)', value: 'Arial, "Segoe UI", Inter, Helvetica, sans-serif', category: 'English' },
+  { name: 'Inter (Clean Modern)', value: 'Inter, Arial, sans-serif', category: 'English' },
+  { name: 'Noto Sans Gujarati (Official Gujarati)', value: '"Noto Sans Gujarati", "Shruti", sans-serif', category: 'Gujarati' },
 ];
 
-const UNIFORM_FONT = '"Courier Prime", "Courier New", Consolas, monospace';
-const UNIFORM_COLOR = '#111827';
-const UNIFORM_SIZE = 14;
+export const UNIFORM_FONT = 'Arial, "Segoe UI", Inter, Helvetica, sans-serif';
+export const UNIFORM_COLOR = '#111827';
+export const UNIFORM_SIZE = 13;
 
 /**
  * Pixel-accurate coordinates matching the authentic KDCC Bank passbook slip (1024 x 576 px).
- * All fields have the EXACT SAME uniform font family, font size (14px), font weight (bold), and color.
+ * All fields have the EXACT SAME uniform font family (Arial Bold / Segoe UI Bold Sans-Serif),
+ * matching the pre-printed labels ('Branch Name & Code :', 'Customer No :', etc.) on the authentic slip.
  */
 export const DEFAULT_FIELD_CONFIGS: Record<DocumentFieldKey, FieldConfig> = {
   branchName: {

@@ -150,7 +150,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
               <label htmlFor="customerName" className="font-semibold text-slate-800">
                 {isGu ? 'ગ્રાહકનું નામ (Name)' : 'Customer Name (Name)'}
               </label>
-              <span className="text-[10px] text-slate-500 font-mono">Mr. BHAVIN...</span>
+              <span className="text-[10px] text-slate-500 font-sans">Mr. BHAVIN...</span>
             </div>
             <input
               id="customerName"
@@ -158,7 +158,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
               value={data.customerName || ''}
               onChange={(e) => onChange('customerName', e.target.value.toUpperCase())}
               placeholder="e.g. Mr. BHAVIN BHASKARBHAI PATEL"
-              className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-md font-mono text-slate-900 font-bold tracking-wide transition uppercase"
+              className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-md font-sans text-slate-900 font-bold tracking-wide transition uppercase"
             />
           </div>
 
@@ -174,7 +174,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                 value={data.accountNumber || ''}
                 onChange={(e) => onChange('accountNumber', e.target.value)}
                 placeholder="306050055336"
-                className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-md font-mono text-slate-900 font-bold transition"
+                className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-md font-sans text-slate-900 font-bold transition"
               />
             </div>
 
@@ -188,7 +188,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                 value={data.customerId || ''}
                 onChange={(e) => onChange('customerId', e.target.value)}
                 placeholder="350003624381"
-                className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-md font-mono text-slate-900 font-bold transition"
+                className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-md font-sans text-slate-900 font-bold transition"
               />
             </div>
           </div>
@@ -204,7 +204,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
               value={data.address || ''}
               onChange={(e) => onChange('address', e.target.value.toUpperCase())}
               placeholder="CHORAWALI KHADKI, SALUN TALPAD,&#10;387001, GUJARAT"
-              className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-md font-mono text-slate-900 font-semibold resize-none transition uppercase"
+              className="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-md font-sans text-slate-900 font-semibold resize-none transition uppercase"
             />
           </div>
         </div>
@@ -239,7 +239,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     type="text"
                     value={data.branchName || ''}
                     onChange={(e) => onChange('branchName', e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                   />
                 </div>
                 <div>
@@ -250,7 +250,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     type="text"
                     value={data.ifscCode || ''}
                     onChange={(e) => onChange('ifscCode', e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                   />
                 </div>
               </div>
@@ -264,7 +264,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                   type="text"
                   value={data.branchAddress || ''}
                   onChange={(e) => onChange('branchAddress', e.target.value)}
-                  className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                  className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                 />
               </div>
 
@@ -278,7 +278,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     type="text"
                     value={data.productDescription || ''}
                     onChange={(e) => onChange('productDescription', e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                   />
                 </div>
                 <div>
@@ -289,7 +289,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     type="text"
                     value={data.micrCode || ''}
                     onChange={(e) => onChange('micrCode', e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                   />
                 </div>
               </div>
@@ -304,7 +304,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     type="text"
                     value={data.dateOfIssue || ''}
                     onChange={(e) => onChange('dateOfIssue', e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                   />
                 </div>
                 <div>
@@ -315,7 +315,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     type="text"
                     value={data.ckycNo || ''}
                     onChange={(e) => onChange('ckycNo', e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                   />
                 </div>
               </div>
@@ -330,7 +330,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     type="text"
                     value={data.nominee || ''}
                     onChange={(e) => onChange('nominee', e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                   />
                 </div>
                 <div className="col-span-2">
@@ -341,7 +341,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                     type="text"
                     value={data.nomineeName || ''}
                     onChange={(e) => onChange('nomineeName', e.target.value)}
-                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                    className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                   />
                 </div>
               </div>
@@ -354,7 +354,7 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
                   type="text"
                   value={data.modeOfOperation || ''}
                   onChange={(e) => onChange('modeOfOperation', e.target.value)}
-                  className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-mono text-slate-800"
+                  className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-300 rounded font-sans text-slate-800"
                 />
               </div>
             </div>

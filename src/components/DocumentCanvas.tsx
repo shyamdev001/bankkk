@@ -24,8 +24,9 @@ interface DocumentCanvasProps {
   onZoomChange: (zoom: number) => void;
 }
 
-// Universal crisp monospace passbook font
-const UNIFORM_CANVAS_FONT = '"Courier New", "Courier Prime", Courier, monospace';
+// Authentic bank passbook typography - exact match to pre-printed slip labels
+const UNIFORM_CANVAS_FONT = 'Arial, "Segoe UI", Inter, Helvetica, sans-serif';
+const UNIFORM_CANVAS_SIZE = 13;
 
 export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
   template,
@@ -141,11 +142,11 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
                     y={0}
                     width={config.width}
                     text={val}
-                    fontSize={14}
-                    fontFamily={UNIFORM_CANVAS_FONT}
-                    fontStyle="bold"
-                    fill="#111827"
-                    align="left"
+                    fontSize={config.fontSize || UNIFORM_CANVAS_SIZE}
+                    fontFamily={config.fontFamily || UNIFORM_CANVAS_FONT}
+                    fontStyle={config.bold ? 'bold' : 'normal'}
+                    fill={config.color || '#111827'}
+                    align={config.align || 'left'}
                     lineHeight={config.lineHeight || 1.35}
                     wrap="word"
                     padding={0}
