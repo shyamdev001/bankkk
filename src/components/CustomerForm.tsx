@@ -21,6 +21,7 @@ import {
   Building2,
   MapPin,
 } from 'lucide-react';
+import { BankBranchSelector } from './BankBranchSelector';
 
 interface CustomerFormProps {
   data: CustomerData;
@@ -62,6 +63,14 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
 
   const getDef = (key: DocumentFieldKey) => {
     return FIELD_DEFINITIONS.find((d) => d.key === key)!;
+  };
+
+  const handleApplyBranch = (updates: Partial<Record<DocumentFieldKey, string>>) => {
+    for (const [key, val] of Object.entries(updates)) {
+      if (val !== undefined) {
+        onChange(key as DocumentFieldKey, val);
+      }
+    }
   };
 
   return (
@@ -162,6 +171,12 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
             <CreditCard className="h-3.5 w-3.5" />
             <span>{isGu ? 'ખાતા અને બેંકિંગ વિગતો' : 'Account & Banking Identifiers'}</span>
           </div>
+
+          {/* Quick Bank & 89 Branches Selector from KDCC Bank */}
+          <BankBranchSelector
+            language={language}
+            onApplyBranch={handleApplyBranch}
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {accountFields.map((key) => {

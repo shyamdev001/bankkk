@@ -3,8 +3,12 @@ import { TemplateData } from '../types';
 /**
  * Generates an official, high-resolution bank certificate template (A4 standard: 1240 x 1754 px @ 150 DPI).
  * Contains bilingual English/Gujarati headers, security borders, watermark, and blank fields.
+ * Defaults to The Kheda District Central Co-operative Bank Ltd.
  */
-export function generateDefaultBankTemplate(): TemplateData {
+export function generateDefaultBankTemplate(
+  bankNameEn = 'THE KHEDA DISTRICT CENTRAL CO-OPERATIVE BANK LTD.',
+  bankNameGu = 'ધી ખેડા ડિસ્ટ્રિક્ટ સેન્ટ્રલ કો-ઓપરેટિવ બેંક લિમિટેડ'
+): TemplateData {
   const width = 1240;
   const height = 1754;
 
@@ -44,25 +48,25 @@ export function generateDefaultBankTemplate(): TemplateData {
     <path d="M ${width - 40},${height - 75} L ${width - 75},${height - 40} M ${width - 40},${height - 85} L ${width - 85},${height - 40}" stroke="#1e3a8a" stroke-width="1.5" />
 
     <!-- Top Bank Emblem and Branding Header -->
-    <g transform="translate(70, 70)">
+    <g transform="translate(70, 68)">
       <!-- Bank Emblem Icon -->
-      <circle cx="50" cy="50" r="42" fill="url(#goldGrad)" opacity="0.9" />
+      <circle cx="50" cy="50" r="42" fill="url(#goldGrad)" opacity="0.95" />
       <circle cx="50" cy="50" r="37" fill="#ffffff" />
       <polygon points="50,22 62,38 72,52 64,52 64,72 36,72 36,52 28,52 38,38" fill="#1e3a8a" />
       <circle cx="50" cy="44" r="5" fill="#f59e0b" />
 
       <!-- Bank Name in Gujarati -->
-      <text x="110" y="38" font-family="'Noto Sans Gujarati', 'Shruti', 'Arial', sans-serif" font-size="24" font-weight="700" fill="#1e3a8a">
-        સૌરાષ્ટ્ર ગ્રામીણ સહકારી બેંક લિમિટેડ
+      <text x="110" y="38" font-family="'Noto Sans Gujarati', 'Shruti', 'Arial', sans-serif" font-size="22" font-weight="700" fill="#1e3a8a">
+        ${bankNameGu}
       </text>
 
       <!-- Bank Name in English -->
-      <text x="110" y="65" font-family="'Inter', 'Arial', sans-serif" font-size="21" font-weight="800" letter-spacing="1" fill="#0f172a">
-        SAURASHTRA GRAMIN COOPERATIVE BANK LTD.
+      <text x="110" y="65" font-family="'Inter', 'Arial', sans-serif" font-size="20" font-weight="800" letter-spacing="0.5" fill="#0f172a">
+        ${bankNameEn}
       </text>
 
-      <text x="110" y="85" font-family="'Inter', 'Arial', sans-serif" font-size="12" font-weight="500" fill="#64748b">
-        (Scheduled Bank | Reg. No: GUJ/CO-OP/8912/1976 | RBI License: CO-OP/AHM-041)
+      <text x="110" y="85" font-family="'Inter', 'Arial', sans-serif" font-size="11.5" font-weight="500" fill="#64748b">
+        (Scheduled Co-operative Bank | Head Office: Station Road, Ghodia Bazar, Nadiad - 387001 | RBI License: CO-OP/KDCC-01)
       </text>
 
       <!-- ISO Badge -->
@@ -91,7 +95,7 @@ export function generateDefaultBankTemplate(): TemplateData {
     </g>
 
     <!-- Ref and Date Meta -->
-    <text x="80" y="315" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#475569">Ref No: SGCB/VERIF/2026-27/</text>
+    <text x="80" y="315" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#475569">Ref No: KDCC/VERIF/2026-27/</text>
     <line x1="280" y1="316" x2="430" y2="316" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3" />
     <text x="300" y="312" font-family="'Courier Prime', monospace" font-size="13" font-weight="700" fill="#0f172a">774921</text>
 
@@ -105,7 +109,6 @@ export function generateDefaultBankTemplate(): TemplateData {
     </text>
 
     <!-- Pre-printed Table Form Boundaries -->
-    <!-- Column 1: Labels | Column 2: Blank Value Area -->
     <g transform="translate(80, 365)">
       <!-- Outer Table Box -->
       <rect x="0" y="0" width="${width - 160}" height="455" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" rx="6" />
@@ -160,7 +163,7 @@ export function generateDefaultBankTemplate(): TemplateData {
     <g transform="translate(${width / 2}, 980)" opacity="0.06">
       <circle cx="0" cy="0" r="140" fill="#1e3a8a" />
       <text x="0" y="15" font-family="'Inter', sans-serif" font-size="44" font-weight="900" fill="#ffffff" text-anchor="middle">
-        VERIFIED
+        KDCC BANK
       </text>
     </g>
 
@@ -198,7 +201,7 @@ export function generateDefaultBankTemplate(): TemplateData {
       <g transform="translate(${width / 2 - 130}, -20)">
         <circle cx="50" cy="50" r="48" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 4" />
         <text x="50" y="46" font-family="'Inter', sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="middle">
-          AFFIX OFFICIAL
+          KDCC BANK
         </text>
         <text x="50" y="60" font-family="'Inter', sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="middle">
           BRANCH SEAL
@@ -207,7 +210,6 @@ export function generateDefaultBankTemplate(): TemplateData {
 
       <!-- Right: Branch Manager / Authorized Signatory -->
       <g transform="translate(${width - 430}, 0)">
-        <!-- Digital Signature Simulation / Box -->
         <rect x="0" y="-10" width="230" height="70" rx="4" fill="#fafafa" stroke="#e2e8f0" stroke-width="1" />
         <text x="115" y="24" font-family="'Courier Prime', monospace" font-size="11" font-weight="700" fill="#0284c7" text-anchor="middle">
           [DIGITALLY SIGNED]
@@ -220,7 +222,7 @@ export function generateDefaultBankTemplate(): TemplateData {
           Authorized Signatory / સહી
         </text>
         <text x="115" y="102" font-family="'Inter', sans-serif" font-size="10" fill="#64748b" text-anchor="middle">
-          Code: MGR-89144 (Branch Ops)
+          KDCC Branch Operations
         </text>
       </g>
     </g>
@@ -229,10 +231,10 @@ export function generateDefaultBankTemplate(): TemplateData {
     <g transform="translate(40, ${height - 75})">
       <line x1="0" y1="0" x2="${width - 80}" y2="0" stroke="#cbd5e1" stroke-width="1" />
       <text x="20" y="20" font-family="'Inter', sans-serif" font-size="10" fill="#64748b">
-        Head Office: Gramin Bank Bhavan, Near Ring Road, Rajkot - 360005, Gujarat | Helpline: 1800-233-8912 | www.sgcbank.example.org
+        Head Office: Station Road, Ghodia Bazar, Nadiad, Kheda, Gujarat - 387001 | Helpline: 0268-2561921 | www.khedadccb.bank.in
       </text>
       <text x="${width - 100}" y="20" font-family="'Courier Prime', monospace" font-size="10" fill="#94a3b8" text-anchor="end">
-        DOC-ID: SGCB-V2-8921-2026
+        DOC-ID: KDCC-2026-V1
       </text>
     </g>
   </svg>
@@ -244,9 +246,9 @@ export function generateDefaultBankTemplate(): TemplateData {
 
   return {
     id: 'primary_template',
-    name: 'Official Bank Verification Certificate (Pre-installed Template)',
+    name: 'The Kheda District Central Co-op Bank Ltd. (Official Certificate Template)',
     type: 'image',
-    originalFileName: 'bank_verification_certificate.svg',
+    originalFileName: 'kdcc_bank_verification_certificate.svg',
     dataUrl,
     width,
     height,
