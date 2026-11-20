@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   Stage,
   Layer,
@@ -10,7 +10,6 @@ import {
 import {
   CustomerData,
   DocumentFieldKey,
-  FIELD_DEFINITIONS,
   FieldConfig,
   TemplateData,
 } from '../types';
@@ -25,6 +24,9 @@ interface DocumentCanvasProps {
   onZoomChange: (zoom: number) => void;
 }
 
+// Universal crisp monospace passbook font
+const UNIFORM_CANVAS_FONT = '"Courier New", "Courier Prime", Courier, monospace';
+
 export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
   template,
   fields,
@@ -35,7 +37,9 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [templateImg, setTemplateImg] = useState<HTMLImageElement | null>(null);
+  const [, setFontsLoaded] = useState(false);
 
+  // Load template image safely
   useEffect(() => {
     if (!template.dataUrl) return;
     const img = new window.Image();
@@ -45,6 +49,15 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
       setTemplateImg(img);
     };
   }, [template.dataUrl]);
+
+  // Ensure fonts ready
+  useEffect(() => {
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        setFontsLoaded(true);
+      });
+    }
+  }, []);
 
   const stageWidth = template.width || 1024;
   const stageHeight = template.height || 576;
@@ -56,7 +69,7 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
     >
       {/* Paper Container with Real Soft Shadow */}
       <div
-        className="transition-transform duration-100 origin-center shadow-lg rounded-sm border border-slate-300 bg-white"
+        className="transition-transform duration-100 origin-center shadow-md rounded-sm border border-slate-300 bg-white"
         style={{
           width: `${stageWidth * zoom}px`,
           height: `${stageHeight * zoom}px`,
@@ -68,7 +81,7 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
           scaleX={zoom}
           scaleY={zoom}
         >
-          {/* Layer 1: Template Background */}
+          {/* Layer 1: Template Background with Pre-printed Labels & Colons */}
           <Layer>
             <KonvaRect
               x={0}
@@ -88,7 +101,7 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
             )}
           </Layer>
 
-          {/* Layer 2: Editable Values */}
+          {/* Layer 2: Editable Values - All Identical Monospace Font and Size */}
           <Layer>
             {Object.keys(fields).map((k) => {
               const key = k as DocumentFieldKey;
@@ -99,8 +112,6 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
               if (!val.trim()) return null;
 
               const isSelected = selectedFieldKey === key;
-              const cleanFontFamily = config.fontFamily.replace(/['"]/g, '').split(',')[0].trim();
-              const fontStyle = config.bold ? 'bold' : 'normal';
 
               return (
                 <KonvaGroup
@@ -130,11 +141,11 @@ export const DocumentCanvas: React.FC<DocumentCanvasProps> = ({
                     y={0}
                     width={config.width}
                     text={val}
-                    fontSize={config.fontSize}
-                    fontFamily={cleanFontFamily}
-                    fontStyle={fontStyle}
-                    fill={config.color || '#111827'}
-                    align={config.align}
+                    fontSize={14}
+                    fontFamily={UNIFORM_CANVAS_FONT}
+                    fontStyle="bold"
+                    fill="#111827"
+                    align="left"
                     lineHeight={config.lineHeight || 1.35}
                     wrap="word"
                     padding={0}

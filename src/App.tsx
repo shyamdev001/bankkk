@@ -108,14 +108,22 @@ export const App: React.FC = () => {
       try {
         // Load or initialize template with KDCC passbook template
         let storedTemplate = await getPrimaryTemplate();
-        // If stored template is older SVG or not the authentic image template, refresh with KDCC template
-        if (!storedTemplate || storedTemplate.width !== 1024) {
+        const storedFields = await getFieldConfigs();
+
+        // Check if stored template or coordinates are from the previous outdated version (e.g. branchName.x < 260)
+        const isOutdated =
+          !storedTemplate ||
+          storedTemplate.width !== 1024 ||
+          !storedFields ||
+          !storedFields.branchName ||
+          storedFields.branchName.x < 260;
+
+        if (isOutdated) {
           storedTemplate = generateDefaultBankTemplate();
           await savePrimaryTemplate(storedTemplate);
           await saveFieldConfigs(DEFAULT_FIELD_CONFIGS);
           setFields(DEFAULT_FIELD_CONFIGS);
         } else {
-          const storedFields = await getFieldConfigs();
           setFields({ ...DEFAULT_FIELD_CONFIGS, ...storedFields });
         }
         setTemplate(storedTemplate);

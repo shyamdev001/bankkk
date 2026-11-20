@@ -213,13 +213,11 @@ export async function renderDocumentToCanvas(
     const scaledX = config.x * exportScale;
     const scaledY = config.y * exportScale;
     const scaledWidth = config.width * exportScale;
-    const scaledFontSize = Math.round(config.fontSize * exportScale);
+    const scaledFontSize = Math.round(14 * exportScale);
 
-    // Font style composition
-    const fontStyle = config.italic ? 'italic' : 'normal';
-    const fontWeight = config.bold ? '700' : '400';
-    ctx.font = `${fontStyle} ${fontWeight} ${scaledFontSize}px ${config.fontFamily}`;
-    ctx.fillStyle = config.color || '#000000';
+    // Uniform crisp monospace bank passbook typography
+    ctx.font = `bold ${scaledFontSize}px "Courier New", "Courier Prime", Courier, monospace`;
+    ctx.fillStyle = '#111827';
     ctx.textBaseline = 'top';
 
     // Alignment and X anchor calculation
