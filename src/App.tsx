@@ -114,7 +114,7 @@ export const App: React.FC = () => {
         const isOutdated =
           !storedTemplate ||
           storedTemplate.width !== 1024 ||
-          !storedTemplate.name.includes('(Official HD Template v2)') ||
+          !storedTemplate.name.includes('(Official HD Template v3)') ||
           !storedFields ||
           !storedFields.branchName ||
           storedFields.branchName.x !== 255 ||
