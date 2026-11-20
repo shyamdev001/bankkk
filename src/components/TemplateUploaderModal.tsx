@@ -109,7 +109,8 @@ export const TemplateUploaderModal: React.FC<TemplateUploaderModalProps> = ({
     if (!stagedTemplate) return;
     setIsProcessing(true);
     try {
-      await onSaveTemplate(stagedTemplate);
+      const { originalPdfBuffer, ...cleanTemplate } = stagedTemplate;
+      await onSaveTemplate(cleanTemplate as TemplateData);
       onClose();
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to save template to IndexedDB');

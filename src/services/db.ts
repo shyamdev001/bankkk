@@ -54,8 +54,10 @@ export function getDB() {
 // === Template Storage ===
 export async function savePrimaryTemplate(template: TemplateData): Promise<void> {
   const db = await getDB();
+  // Strip originalPdfBuffer to prevent "ArrayBuffer is detached and could not be cloned" error in IndexedDB
+  const { originalPdfBuffer, ...cleanTemplate } = template;
   await db.put('templates', {
-    ...template,
+    ...cleanTemplate,
     id: TEMPLATE_KEY,
     updatedAt: Date.now(),
   });

@@ -17,7 +17,8 @@ export async function processPdfFile(file: File): Promise<{
   arrayBuffer: ArrayBuffer;
 }> {
   const arrayBuffer = await file.arrayBuffer();
-  const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) });
+  // Pass a cloned slice so Web Worker transfer cannot detach the original ArrayBuffer
+  const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer.slice(0)) });
   const pdf = await loadingTask.promise;
   const pageCount = pdf.numPages;
 
@@ -66,7 +67,8 @@ export async function renderPdfPageFromBuffer(
   pageNumber: number,
   targetWidth = 1240
 ): Promise<{ dataUrl: string; width: number; height: number }> {
-  const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) });
+  // Pass a cloned slice so Web Worker transfer cannot detach the original ArrayBuffer
+  const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer.slice(0)) });
   const pdf = await loadingTask.promise;
   const page = await pdf.getPage(pageNumber);
   const unscaledViewport = page.getViewport({ scale: 1 });
